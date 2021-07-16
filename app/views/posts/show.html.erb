@@ -1,0 +1,42 @@
+<div class="post-show row">
+  <div class="col-md-8">
+    <%=image_tag @post.image, class: 'image' %>
+  </div>
+  <div class="col-md-4">
+    <div class="user">
+      <div class="avatar">
+        <% if @post.user.avatar.attached? %>
+          <%= link_to user_path(@post.user) do %>
+            <%= image_tag @post.user.avatar %>
+          <% end %>
+        <% end %>
+      </div>
+      <%= link_to @post.user.username, user_path(@post.user), class: 'username' %>
+    </div>
+    <div class="description">
+      <%= @post.description %>
+    </div>
+  </div>
+  <div class="delete">
+    <% if current_user.posts.exists?(@post.id) %>
+      <%= link_to 'Remove', post_path(@post), method: :delete, data: { confirm: 'Are you sure?' } %>
+    <% end %>
+  </div>
+  <div class="like">
+    <br>
+  <%= render "posts/upvote_link", post: @post %>
+    <%= content_tag "div", id: "votes-score-#{@post.id}" do %>
+      <%= @post.cached_votes_score %>
+    <% end %>
+    </div>
+  <br>
+</div>
+<%= render "posts/comments" , post:@post%>
+<div class="comments">
+  <%= form_for @comment do |f| %>
+    <%= f.hidden_field :post_id,value: @post.id %>
+    <%= f.text_field :comment,placeholder: "Add comment here" %>
+    <%= f.submit "Post", class: "btn btn-success float-right" %>
+    <% end %>
+  <h2>Тут будут комментарии</h2>
+</div>

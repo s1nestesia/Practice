@@ -1,0 +1,6 @@
+<% post.comments.each do |comment| %>
+  <div class="row">
+    <stropng><%=link_to comment.user.username, user_path(comment.user) %></stropng>
+  </div>
+  <p><%= comment.comment %></p>
+<% end %>
