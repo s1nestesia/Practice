@@ -18,9 +18,11 @@
           <button>Edit Profile</button>
         </a>
         <% else %>
-          <%= link_to 'Follow' , user_relationships_path(@user), method: :post , class: 'btn btn-danger'%>
-          
-        <%end %>
+          <%= link_to 'Follow' , user_relationships_path(@user), method: :post , class: 'btn btn-danger' unless @rel.present?%>
+          <%= link_to 'Unfollow' , relationship_path(@rel.id), method: :delete , class: 'btn btn-danger' if @rel.present?%>
+
+
+      <%end %>
 
       </div>
       <ul class="posts">

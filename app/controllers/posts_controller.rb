@@ -15,10 +15,15 @@ class PostsController < ApplicationController
 
 
   def create
-    Post.create(post_params)
-    redirect_to root_path
-  end
+    @post = Post.new(post_params)
+    @post.user_id = current_user.id if user_signed_in?
 
+    if @post.save
+      redirect_to root_path
+    else
+      redirect_to root_path
+    end
+  end
 
 
   def show
@@ -36,6 +41,6 @@ class PostsController < ApplicationController
   private
 
   def post_params
-    params.require(:post).permit(:description, :image, :user_id)
+    params.require(:post).permit(:description, :image)
   end
 end
