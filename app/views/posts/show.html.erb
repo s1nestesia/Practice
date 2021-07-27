@@ -14,29 +14,40 @@
       <%= link_to @post.user.username, user_path(@post.user), class: 'username' %>
     </div>
     <div class="description">
+
+        <% if current_user.posts.exists?(@post.id) %>
+          <%= link_to 'Remove Post', post_path(@post), method: :delete, data: { confirm: 'Are you sure?' } %>
+        <% end %>
+
+       <h4>Описание:</h4>
       <%= @post.description %>
+      <h4>Комментарии:</h4>
+
+      <%= render "posts/comments" , post:@post%>
     </div>
   </div>
-  <div class="delete">
-    <% if current_user.posts.exists?(@post.id) %>
-      <%= link_to 'Remove', post_path(@post), method: :delete, data: { confirm: 'Are you sure?' } %>
-    <% end %>
-  </div>
-  <div class="like">
-    <br>
-  <%= render "posts/upvote_link", post: @post %>
-    <%= content_tag "div", id: "votes-score-#{@post.id}" do %>
-      <%= @post.cached_votes_score %>
-    <% end %>
-    </div>
+
+  <div>
+  <% if Like.where(user_id: current_user.id, post_id: @post.id).empty? %>
+    <%= link_to("<button>Like it!</button>".html_safe,
+                post_likes_path(user_id: current_user.id,
+                                post_id: @post.id),
+                method: :create) %>
+  <% else %>
+    <%= link_to("<button>Don't like it anymore!</button>".html_safe,
+                post_like_path(user_id: current_user.id,
+                               post_id: @post.id),
+                method: :delete)%>
+  <% end %>
+  <%= @post.likes.count %>
   <br>
+  </div>
 </div>
-<%= render "posts/comments" , post:@post%>
+<br>
 <div class="comments">
   <%= form_for @comment do |f| %>
     <%= f.hidden_field :post_id,value: @post.id %>
     <%= f.text_field :comment,placeholder: "Add comment here" %>
     <%= f.submit "Post", class: "btn btn-success float-right" %>
     <% end %>
-  <h2>Тут будут комментарии</h2>
 </div>
