@@ -7,6 +7,7 @@ class UsersController < ApplicationController
     @user  = User.find(params[:id])
     @rel = @user.followers.find_by(follower: current_user)
     @posts = @user.posts.order(created_at: :desc)
+    @autolikes = Autolike.find_by(autolike_following_id: @user.id, autolike_follower_id: current_user.id)
   end
 
   def edit
