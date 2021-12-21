@@ -22,13 +22,15 @@
           <%= link_to 'Unfollow' , relationship_path(@rel.id), method: :delete , class: 'btn btn-danger' if @rel.present?%>
 
 
-      <%end %>
+      <% end %>
 
       </div>
       <ul class="posts">
         <li><span><%= @posts.count %></span> posts</li>
         <li><span> <%= @user.followers.count %>  </span>followers</li>
-        <li><span> <%= @user.following.count %> </span> following</li>
+        <li><span> <%= @user.following.count %> </span> following</li> <br>
+        <li><span> <%= @user.autolike_followers.count %> </span> autolike_followers</li>
+        <li><span> <%= @user.autolike_followings.count %> </span> autolike_followings</li>
       </ul>
       <h2 class="name"><%= @user.name %></h2>
       <%=link_to @user.website, @user.website, class:  'website' %>
