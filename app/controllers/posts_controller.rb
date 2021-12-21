@@ -17,9 +17,16 @@ class PostsController < ApplicationController
   def create
     @post = Post.new(post_params)
     @post.user_id = current_user.id if user_signed_in?
+    @autolike_follows = Autolike.where(autolike_following_id: current_user.id)
 
-    if @post.save
+    if @post.save!
       redirect_to root_path
+      if @autolike_follows.present?
+        @autolike_follows.each do |auto_like|
+          autolike_follower = auto_like.autolike_follower
+          Like.create(user_id: autolike_follower.id, post_id: @post.id)
+        end
+      end
     else
       redirect_to root_path
     end
