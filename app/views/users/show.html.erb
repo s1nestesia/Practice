@@ -20,8 +20,8 @@
         <% else %>
           <%= link_to 'Follow', user_relationships_path(@user), method: :post , class: 'btn btn-danger' unless @rel.present? %>
           <%= link_to 'Unfollow', relationship_path(@rel.id), method: :delete , class: 'btn btn-danger' if @rel.present? %>
-          <%= link_to 'Follow for autolike', autolikes_path(user_id: @user.id), method: :post , class: 'btn btn-danger' unless @autolikes.present? %>
-          <%= link_to 'Unfollow from autolike', autolike_path(user_id: @user.id), method: :delete , class: 'btn btn-danger' if @autolikes.present? %>
+          <%= link_to 'Follow for autolike', autolikes_path(user_id: @user.id), method: :post , class: 'btn btn-danger margin-left-10' unless @autolikes.present? %>
+          <%= link_to 'Unfollow from autolike', autolike_path(user_id: @user.id), method: :delete , class: 'btn btn-danger margin-left-10' if @autolikes.present? %>
         <% end %>
 
       </div>
