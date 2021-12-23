@@ -12,8 +12,9 @@
         <div class="username">
           <%= post.user.username %>
         </div>
-
-        <%= image_tag post.image, class: 'main-image' %>
+        <%= link_to post_path(post) do %>
+          <%= image_tag post.image, class: 'main-image' %>
+        <% end %>
         <div class="description">
           <%= post.description %>
         </div>
