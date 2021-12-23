@@ -19,7 +19,7 @@ class PostsController < ApplicationController
     @post.user_id = current_user.id if user_signed_in?
     @autolike_follows = Autolike.where(autolike_following_id: current_user.id)
 
-    if @post.save!
+    if @post.save
       redirect_to root_path
       if @autolike_follows.present?
         @autolike_follows.each do |auto_like|
@@ -28,7 +28,7 @@ class PostsController < ApplicationController
         end
       end
     else
-      redirect_to root_path
+      redirect_to root_path, flash: { error: "You can't create an post without attached image" }
     end
   end
 
