@@ -6,11 +6,11 @@ class CommentsController < ApplicationController
   def create
     @comment = Comment.new(comment_params)
     @comment.user_id = current_user.id
-    if @comment.save!
+    if @comment.save
       redirect_to post_path(@comment.post.id)
-      else
-        redirect_to root_path
-      end
+    else
+      redirect_to post_path(@comment.post.id), flash: { error: "You can't leave empty comment" }
+    end
     end
 
   private
